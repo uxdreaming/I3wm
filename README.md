@@ -22,14 +22,17 @@ System dashboard toggled with `F2`. Shows workspace indicators (Super 0-9, Hyper
 
 ### [I3wm Config](I3wm%20Config/)
 
-i3 and picom configuration files. Includes:
+All dotfiles organized by application:
 
-- `config` — i3wm config with Super, Hyper (CapsLock), and Alt modifier layers
-- `picom.conf` — Compositor with blur, shadows, rounded corners, and HUD exclusions
+- `i3/` — i3wm config, Hyper key setup, launcher scripts, monitor daemon
+- `picom/` — Compositor with blur, shadows, rounded corners, HUD exclusions
+- `alacritty/` — Terminal config (opacity, font, theme)
+- `dunst/` — Notification daemon config
+- `gtk-2.0/` & `gtk-3.0/` — Dark theme settings (Adwaita-dark, Papirus icons)
 
 ### [I3wm Guide](I3wm%20Guide/)
 
-Setup instructions, prerequisites, and key mapping reference.
+Complete setup guide from scratch: base installation, essential programs (rofi, dunst, picom, nitrogen), applications (Chrome, VS Code, Obsidian, Logseq), GTK theming, Hyper key configuration, and post-installation checklist. Includes `install.sh` script.
 
 ## Quick Start
 

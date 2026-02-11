@@ -1,0 +1,91 @@
+# Alacritty Configuration
+
+[window]
+opacity = 0.95
+padding = { x = 10, y = 10 }
+decorations = "full"
+dynamic_title = true
+
+[font]
+size = 12.0
+
+[font.normal]
+family = "DejaVu Sans Mono"
+style = "Regular"
+
+[font.bold]
+family = "DejaVu Sans Mono"
+style = "Bold"
+
+[font.italic]
+family = "DejaVu Sans Mono"
+style = "Italic"
+
+[colors]
+# Custom theme - high legibility
+[colors.primary]
+background = "#1c1c1c"
+foreground = "#e0e0e0"
+
+# Normal colors - balanced contrast
+[colors.normal]
+black   = "#3a3a3a"
+red     = "#ff6b6b"
+green   = "#87d687"
+yellow  = "#e0c080"
+blue    = "#82aaff"
+magenta = "#c792ea"
+cyan    = "#80cbc4"
+white   = "#d0d0d0"
+
+# Bright colors - high visibility
+[colors.bright]
+black   = "#606060"
+red     = "#ff8a8a"
+green   = "#a5e0a5"
+yellow  = "#f0d090"
+blue    = "#a0c4ff"
+magenta = "#dda0ff"
+cyan    = "#a0e0da"
+white   = "#f0f0f0"
+
+[cursor]
+style = { shape = "Block", blinking = "Off" }
+
+[colors.cursor]
+text = "#1c1c1c"
+cursor = "#e0e0e0"
+
+[scrolling]
+history = 10000
+multiplier = 3
+
+[mouse]
+hide_when_typing = true
+
+[keyboard]
+# Key bindings
+[[keyboard.bindings]]
+key = "V"
+mods = "Control|Shift"
+action = "Paste"
+
+[[keyboard.bindings]]
+key = "C"
+mods = "Control|Shift"
+action = "Copy"
+
+[[keyboard.bindings]]
+key = "Plus"
+mods = "Control"
+action = "IncreaseFontSize"
+
+[[keyboard.bindings]]
+key = "Minus"
+mods = "Control"
+action = "DecreaseFontSize"
+
+[[keyboard.bindings]]
+key = "Key0"
+mods = "Control"
+action = "ResetFontSize"
