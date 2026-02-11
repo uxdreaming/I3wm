@@ -20,14 +20,21 @@ System dashboard toggled with `F2`. Shows workspace indicators (Super 0-9, Hyper
 
 **Info cards:** WiFi, Temperature, Uptime, Load — with SVG icons and colored accent borders.
 
+### [I3wm Hyper Key](I3wm%20Hyper%20Key/)
+
+Converts Caps Lock to a **real Hyper key** on `mod3`, completely separate from Super (`mod4`). Includes install/uninstall scripts, autostart desktop entry, and udev rule for USB keyboards. Solves the common problem where most guides incorrectly put Hyper on mod4 making it identical to Super.
+
 ### [I3wm Config](I3wm%20Config/)
 
 All dotfiles organized by application:
 
-- `i3/` — i3wm config, Hyper key setup, launcher scripts, monitor daemon
+- `i3/` — i3wm config, launcher scripts, monitor daemon, window tracker
 - `picom/` — Compositor with blur, shadows, rounded corners, HUD exclusions
 - `alacritty/` — Terminal config (opacity, font, theme)
+- `rofi/` — Launcher config, audio selector script
 - `dunst/` — Notification daemon config
+- `polybar/` — Status bar config (optional, not used in current setup)
+- `nitrogen/` — Wallpaper manager config
 - `gtk-2.0/` & `gtk-3.0/` — Dark theme settings (Adwaita-dark, Papirus icons)
 
 ### [I3wm Guide](I3wm%20Guide/)

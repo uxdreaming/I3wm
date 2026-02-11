@@ -1,0 +1,48 @@
+#!/bin/bash
+# Hyper Key Fix - Ensures Caps Lock is Hyper on mod3 (SEPARATE from Super)
+#
+# IMPORTANT: This script does NOT use setxkbmap -option caps:hyper because
+# that option forces Hyper onto mod4 (same as Super), making them identical.
+# Instead, we use pure xmodmap to:
+# 1. Map Caps Lock keycode to Hyper_L
+# 2. Ensure Hyper_L is on mod3 (not mod4 where Super lives)
+#
+# Called by: autostart, udev rules, or manually
+
+# Wait for X to be ready if called early
+sleep 0.3
+
+# Exit if no display
+if [ -z "$DISPLAY" ]; then
+    export DISPLAY=:0
+fi
+
+# Clear any existing caps:hyper option that conflicts with our setup
+# This removes ALL xkb options - we only want our xmodmap config
+setxkbmap -option 2>/dev/null
+
+# Apply pure xmodmap configuration
+# DO NOT use setxkbmap -option caps:hyper - it puts Hyper on mod4!
+xmodmap - <<'EOF' 2>/dev/null
+! Clear lock modifier (Caps Lock functionality)
+clear lock
+
+! Map Caps Lock key (keycode 66) to Hyper_L
+keycode 66 = Hyper_L
+
+! Remove Hyper_L from mod4 (where Super lives)
+remove mod4 = Hyper_L
+
+! Add Hyper_L to mod3 (separate modifier)
+add mod3 = Hyper_L
+EOF
+
+# Verify configuration
+MOD3_HYPER=$(xmodmap -pm 2>/dev/null | grep "^mod3" | grep -q "Hyper_L" && echo 1 || echo 0)
+MOD4_HYPER=$(xmodmap -pm 2>/dev/null | grep "^mod4" | grep -q "Hyper_L" && echo 1 || echo 0)
+
+if [ "$MOD3_HYPER" -eq 1 ] && [ "$MOD4_HYPER" -eq 0 ]; then
+    echo "$(date): Hyper on mod3, NOT on mod4 - OK" >> /tmp/hyper-key.log
+else
+    echo "$(date): FAILED - mod3_hyper=$MOD3_HYPER, mod4_hyper=$MOD4_HYPER" >> /tmp/hyper-key.log
+fi

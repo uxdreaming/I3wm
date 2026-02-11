@@ -1,0 +1,4 @@
+# Hyper Key udev rule - runs fix when keyboard is connected
+# Reloads keyboard config when a new keyboard is plugged in
+
+ACTION=="add", SUBSYSTEM=="input", ENV{ID_INPUT_KEYBOARD}=="1", RUN+="/usr/local/bin/hyper-key-fix"

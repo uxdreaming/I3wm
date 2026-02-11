@@ -1,0 +1,94 @@
+* {
+    bg:             #202020;
+    bg-alt:         #2a2a2a;
+    fg:             #e0e0e0;
+    fg-alt:         #808080;
+    accent:         #78a9a5;
+    selected-bg:    #101010;
+    selected-fg:    #c8c8c8;
+
+    background-color: transparent;
+    text-color:       @fg;
+    spacing:          0;
+}
+
+window {
+    background-color: @bg;
+    border:           2px solid;
+    border-color:     @accent;
+    border-radius:    8px;
+    width:            360px;
+    padding:          0;
+}
+
+mainbox {
+    background-color: @bg;
+    children:         [ inputbar, message, listview ];
+}
+
+message {
+    background-color: @bg;
+    padding:          8px 14px;
+    border:           0 0 1px 0;
+    border-color:     @bg-alt;
+}
+
+textbox {
+    text-color:       @fg-alt;
+    font:             "monospace 9";
+}
+
+inputbar {
+    background-color: @bg-alt;
+    padding:          12px;
+    children:         [ prompt, entry ];
+}
+
+prompt {
+    background-color: @accent;
+    text-color:       @selected-bg;
+    padding:          6px 12px;
+    border-radius:    4px;
+    margin:           0 12px 0 0;
+    font:             "monospace bold 11";
+}
+
+entry {
+    padding:          6px;
+    placeholder:      "Buscar...";
+    placeholder-color: @fg-alt;
+}
+
+listview {
+    background-color: @bg;
+    padding:          8px;
+    lines:            8;
+    scrollbar:        false;
+    fixed-height:     false;
+    dynamic:          true;
+}
+
+element {
+    padding:          10px 14px;
+    border-radius:    4px;
+    margin:           2px 0;
+}
+
+element normal.normal,
+element alternate.normal {
+    background-color: @bg;
+    text-color:       @fg;
+}
+
+element selected.normal,
+element selected.alternate {
+    background-color: @selected-bg;
+    text-color:       @selected-fg;
+    border:           1px solid;
+    border-color:     @accent;
+}
+
+element-text {
+    highlight:        bold;
+    font:             "monospace 11";
+}

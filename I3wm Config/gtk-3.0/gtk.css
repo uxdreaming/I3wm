@@ -1,0 +1,8 @@
+/* Configuración para Thunar */
+window.thunar .standard-view label {
+    font-size: 20px;
+}
+
+window.thunar .standard-view {
+    font-size: 20px;
+}
