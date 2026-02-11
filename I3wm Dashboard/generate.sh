@@ -38,9 +38,17 @@ done < <(echo "$TREE_JSON" | jq -r '
 
 # Count windows per workspace
 declare -A WS_COUNT
-for wsnum in "${!WS_WINDOWS[@]}"; do
-  WS_COUNT[$wsnum]=$(echo "${WS_WINDOWS[$wsnum]}" | tr '&#10;' '\n' | grep -c '.')
-done
+while IFS='|' read -r wsnum wname; do
+  [ -z "$wsnum" ] && continue
+  WS_COUNT[$wsnum]=$(( ${WS_COUNT[$wsnum]:-0} + 1 ))
+done < <(echo "$TREE_JSON" | jq -r '
+  recurse(.nodes[]?, .floating_nodes[]?) |
+  select(.type == "workspace") |
+  .num as $n |
+  recurse(.nodes[]?, .floating_nodes[]?) |
+  select(.window != null and .name != null) |
+  "\($n)|\(.name)"
+' 2>/dev/null)
 
 build_ws() {
   local start=$1 end=$2 color=$3 html=""
