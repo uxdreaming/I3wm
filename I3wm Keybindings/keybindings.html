@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>i3 Keybindings HUD</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  ::-webkit-scrollbar { display: none; }
+  * { scrollbar-width: none; }
+
+  body {
+    background: #101010;
+    color: #d4d4d4;
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 32px 10px;
+    border-bottom: 1px solid #1f1f1f;
+  }
+
+  header h1 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #e5e5e5;
+    letter-spacing: 0.5px;
+  }
+
+  .hint {
+    font-size: 14px;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .hint kbd {
+    display: inline-block;
+    padding: 2px 8px;
+    background: linear-gradient(180deg, #3a3a3a, #2a2a2a);
+    border: 1px solid #444;
+    border-bottom: 2px solid #1a1a1a;
+    border-radius: 4px;
+    font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: #aaa;
+  }
+
+  .grid {
+    flex: 1;
+    columns: 3;
+    column-gap: 24px;
+    padding: 12px 24px 10px;
+    overflow-y: auto;
+  }
+
+  .section {
+    margin-bottom: 10px;
+    break-inside: avoid;
+  }
+
+  .section-title {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 0 0 6px 2px;
+    margin-bottom: 6px;
+    border-bottom: 1px solid #1f1f1f;
+  }
+
+  .section-title.cat-super { color: #60a5fa; border-color: #1e3a5f; }
+  .section-title.cat-alt { color: #34d399; border-color: #1a4a3a; }
+  .section-title.cat-hyper { color: #a78bfa; border-color: #3a2a5f; }
+  .section-title.cat-media { color: #fbbf24; border-color: #4a3a1a; }
+  .section-title.cat-system { color: #f87171; border-color: #4a2020; }
+  .section-title.cat-screenshot { color: #fb923c; border-color: #4a3020; }
+  .section-title.cat-resize { color: #38bdf8; border-color: #1a3a4f; }
+
+  .bindings {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .binding {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 3px 6px;
+    border-radius: 4px;
+    transition: background 0.15s;
+  }
+
+  .binding:hover {
+    background: #1a1a1a;
+  }
+
+  .keys {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+
+  /* === KEYCAP BASE === */
+  kbd.key {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px 8px;
+    min-width: 26px;
+    height: 24px;
+    background: linear-gradient(180deg, #484848 0%, #363636 100%);
+    border: 1px solid #555;
+    border-bottom: 3px solid #222;
+    border-radius: 5px;
+    font-family: 'SF Mono', 'Fira Code', 'JetBrains Mono', 'Cascadia Code', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: #d4d4d4;
+    text-align: center;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08);
+    text-shadow: 0 1px 1px rgba(0,0,0,0.3);
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  /* === MODIFIER COLORS === */
+  kbd.mod-super {
+    background: linear-gradient(180deg, #2a5298 0%, #1e3a6e 100%);
+    border-color: #3b6eb8;
+    border-bottom-color: #142a52;
+    color: #a8ccf0;
+  }
+
+  kbd.mod-alt {
+    background: linear-gradient(180deg, #1a6b4a 0%, #14503a 100%);
+    border-color: #2a8a62;
+    border-bottom-color: #0e3a2a;
+    color: #8ee8c0;
+  }
+
+  kbd.mod-hyper {
+    background: linear-gradient(180deg, #5b3a9e 0%, #4a2a80 100%);
+    border-color: #7a52c0;
+    border-bottom-color: #3a1a60;
+    color: #c4aaf0;
+  }
+
+  kbd.mod-shift {
+    background: linear-gradient(180deg, #9a6a1a 0%, #7a5010 100%);
+    border-color: #b88030;
+    border-bottom-color: #5a3a08;
+    color: #f0d898;
+  }
+
+  kbd.mod-ctrl {
+    background: linear-gradient(180deg, #9e3a6e 0%, #7a2a58 100%);
+    border-color: #c050a0;
+    border-bottom-color: #5a1a42;
+    color: #f0b8d8;
+  }
+
+  kbd.key-fn {
+    background: linear-gradient(180deg, #6a3030 0%, #502222 100%);
+    border-color: #8a4444;
+    border-bottom-color: #3a1515;
+    color: #f0a8a8;
+  }
+
+  kbd.key-arrow {
+    font-size: 15px;
+    padding: 3px 6px;
+    min-width: 24px;
+  }
+
+  kbd.key-wide {
+    padding: 3px 12px;
+  }
+
+  kbd.key-range {
+    padding: 3px 6px;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+  }
+
+  .plus {
+    color: #444;
+    font-size: 14px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .action {
+    font-size: 15px;
+    color: #ccc;
+    text-align: right;
+    padding-left: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .separator {
+    height: 1px;
+    background: #1a1a1a;
+    margin: 4px 0;
+  }
+
+  .resize-box {
+    background: #141418;
+    border: 1px solid #1f1f2a;
+    border-radius: 6px;
+    padding: 8px;
+  }
+
+  .resize-box .bindings {
+    gap: 3px;
+  }
+
+  .resize-box .binding {
+    padding: 2px 4px;
+  }
+
+  .search-box input {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 14px;
+    color: #e0e0e0;
+    font-family: inherit;
+    width: 260px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .search-box input::placeholder {
+    color: #555;
+  }
+
+  .search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .search-box input:focus {
+    border-color: #60a5fa;
+  }
+
+  .mod-filters {
+    display: flex;
+    gap: 6px;
+  }
+
+  .mod-btn {
+    padding: 4px 10px;
+    border: 1px solid #333;
+    border-radius: 5px;
+    background: #1a1a1a;
+    color: #666;
+    font-size: 12px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .mod-btn:hover { border-color: #555; color: #aaa; }
+  .mod-btn.active { border-width: 2px; }
+  .mod-btn-super.active { background: #1e3a6e; border-color: #3b6eb8; color: #a8ccf0; }
+  .mod-btn-hyper.active { background: #4a2a80; border-color: #7a52c0; color: #c4aaf0; }
+  .mod-btn-alt.active { background: #14503a; border-color: #2a8a62; color: #8ee8c0; }
+  .mod-btn-ctrl.active { background: #7a2a58; border-color: #c050a0; color: #f0b8d8; }
+  .mod-btn-shift.active { background: #7a5010; border-color: #b88030; color: #f0d898; }
+
+  .counter {
+    font-size: 13px;
+    color: #555;
+    white-space: nowrap;
+    min-width: 70px;
+  }
+
+  .counter.has-results { color: #60a5fa; }
+  .counter.no-results { color: #f87171; }
+
+  .no-results-msg {
+    display: none;
+    text-align: center;
+    padding: 40px;
+    color: #444;
+    font-size: 16px;
+    grid-column: 1 / -1;
+  }
+
+  .no-results-msg.visible { display: block; }
+
+  .binding.hidden {
+    display: none;
+  }
+
+  .section.hidden {
+    display: none;
+  }
+
+  footer {
+    text-align: center;
+    padding: 6px;
+    border-top: 1px solid #1a1a1a;
+    font-size: 12px;
+    color: #333;
+    letter-spacing: 1px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>i3 Keybindings</h1>
+  <div class="search-box">
+    <input type="text" id="search" placeholder="Buscar..." autofocus spellcheck="false" />
+    <div class="mod-filters">
+      <button class="mod-btn mod-btn-super" data-filter="super">1 Super</button>
+      <button class="mod-btn mod-btn-hyper" data-filter="hyper">2 Hyper</button>
+      <button class="mod-btn mod-btn-alt" data-filter="alt">3 Alt</button>
+      <button class="mod-btn mod-btn-ctrl" data-filter="ctrl">4 Ctrl</button>
+      <button class="mod-btn mod-btn-shift" data-filter="shift">5 Shift</button>
+    </div>
+    <span id="counter" class="counter"></span>
+  </div>
+  <span class="hint">Press <kbd>F1</kbd> to close</span>
+</header>
+
+<div class="grid">
+
+    <!-- APPLICATIONS -->
+    <div class="section">
+      <div class="section-title cat-super">Applications</div>
+      <div class="bindings">
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key key-wide">Enter</kbd>
+          </div>
+          <span class="action">Terminal</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key">D</kbd>
+          </div>
+          <span class="action">App Launcher</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key mod-shift">Shift</kbd><span class="plus">+</span><kbd class="key">D</kbd>
+          </div>
+          <span class="action">File Manager</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key mod-shift">Shift</kbd><span class="plus">+</span><kbd class="key">W</kbd>
+          </div>
+          <span class="action">Chrome</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key mod-shift">Shift</kbd><span class="plus">+</span><kbd class="key">Z</kbd>
+          </div>
+          <span class="action">ZapZap</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key mod-shift">Shift</kbd><span class="plus">+</span><kbd class="key">S</kbd>
+          </div>
+          <span class="action">Software Manager</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key mod-shift">Shift</kbd><span class="plus">+</span><kbd class="key">A</kbd>
+          </div>
+          <span class="action">Web App Manager</span>
+        </div>
+        <div class="separator"></div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-alt">Alt</kbd><span class="plus">+</span><kbd class="key">O</kbd>
+          </div>
+          <span class="action">Obsidian</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-alt">Alt</kbd><span class="plus">+</span><kbd class="key">L</kbd>
+          </div>
+          <span class="action">Logseq</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-alt">Alt</kbd><span class="plus">+</span><kbd class="key">V</kbd>
+          </div>
+          <span class="action">VS Code</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- HYPER KEY -->
+    <div class="section">
+      <div class="section-title cat-hyper">Hyper Key</div>
+      <div class="bindings">
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-hyper">Hyper</kbd><span class="plus">+</span><kbd class="key">P</kbd>
+          </div>
+          <span class="action">Audio Selector</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-hyper">Hyper</kbd><span class="plus">+</span><kbd class="key">V</kbd>
+          </div>
+          <span class="action">Audio Mixer</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-hyper">Hyper</kbd><span class="plus">+</span><kbd class="key">N</kbd>
+          </div>
+          <span class="action">Notifications</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-hyper">Hyper</kbd><span class="plus">+</span><kbd class="key">W</kbd>
+          </div>
+          <span class="action">WiFi Menu</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREENSHOTS -->
+    <div class="section">
+      <div class="section-title cat-screenshot">Screenshots</div>
+      <div class="bindings">
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key key-fn">Print</kbd>
+          </div>
+          <span class="action">Flameshot</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-shift">Shift</kbd><span class="plus">+</span><kbd class="key key-fn">Print</kbd>
+          </div>
+          <span class="action">Clipboard + Save</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key mod-shift">Shift</kbd><span class="plus">+</span><kbd class="key key-fn">Print</kbd>
+          </div>
+          <span class="action">Delay 3s</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- WINDOWS -->
+    <div class="section">
+      <div class="section-title cat-super">Windows</div>
+      <div class="bindings">
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key">C</kbd>
+          </div>
+          <span class="action">Kill Window</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key key-arrow">←↓↑→</kbd>
+          </div>
+          <span class="action">Focus Direction</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key mod-shift">Shift</kbd><span class="plus">+</span><kbd class="key key-arrow">←↓↑→</kbd>
+          </div>
+          <span class="action">Move Window</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key">F</kbd>
+          </div>
+          <span class="action">Fullscreen</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key">B</kbd>
+          </div>
+          <span class="action">Split Horizontal</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key">V</kbd>
+          </div>
+          <span class="action">Split Vertical</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key key-wide">Space</kbd>
+          </div>
+          <span class="action">Focus Toggle</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key mod-shift">Shift</kbd><span class="plus">+</span><kbd class="key key-wide">Space</kbd>
+          </div>
+          <span class="action">Float Toggle</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key">A</kbd>
+          </div>
+          <span class="action">Focus Parent</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- LAYOUT -->
+    <div class="section">
+      <div class="section-title cat-super">Layout</div>
+      <div class="bindings">
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key">S</kbd>
+          </div>
+          <span class="action">Stacking</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key">W</kbd>
+          </div>
+          <span class="action">Tabbed</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key">E</kbd>
+          </div>
+          <span class="action">Toggle Split</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESIZE MODE -->
+    <div class="section">
+      <div class="section-title cat-resize">Resize Mode</div>
+      <div class="bindings">
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key">R</kbd>
+          </div>
+          <span class="action">Enter Resize</span>
+        </div>
+      </div>
+      <div class="resize-box" style="margin-top: 6px;">
+        <div class="bindings">
+          <div class="binding">
+            <div class="keys">
+              <kbd class="key">H</kbd> <kbd class="key key-arrow">←</kbd>
+            </div>
+            <span class="action">Shrink Width</span>
+          </div>
+          <div class="binding">
+            <div class="keys">
+              <kbd class="key">J</kbd> <kbd class="key key-arrow">↓</kbd>
+            </div>
+            <span class="action">Grow Height</span>
+          </div>
+          <div class="binding">
+            <div class="keys">
+              <kbd class="key">K</kbd> <kbd class="key key-arrow">↑</kbd>
+            </div>
+            <span class="action">Shrink Height</span>
+          </div>
+          <div class="binding">
+            <div class="keys">
+              <kbd class="key">L</kbd> <kbd class="key key-arrow">→</kbd>
+            </div>
+            <span class="action">Grow Width</span>
+          </div>
+          <div class="separator"></div>
+          <div class="binding">
+            <div class="keys">
+              <kbd class="key key-wide">Enter</kbd> <kbd class="key key-wide">Esc</kbd>
+            </div>
+            <span class="action">Exit Resize</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SYSTEM -->
+    <div class="section">
+      <div class="section-title cat-system">System</div>
+      <div class="bindings">
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key">L</kbd>
+          </div>
+          <span class="action">Lock Screen</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key mod-shift">Shift</kbd><span class="plus">+</span><kbd class="key">N</kbd>
+          </div>
+          <span class="action">Wallpaper</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key mod-shift">Shift</kbd><span class="plus">+</span><kbd class="key">C</kbd>
+          </div>
+          <span class="action">Reload Config</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key mod-shift">Shift</kbd><span class="plus">+</span><kbd class="key">R</kbd>
+          </div>
+          <span class="action">Restart i3</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key mod-shift">Shift</kbd><span class="plus">+</span><kbd class="key">E</kbd>
+          </div>
+          <span class="action">Exit i3</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key">&lt;</kbd>
+          </div>
+          <span class="action">OCR Extractor</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key key-fn">F1</kbd>
+          </div>
+          <span class="action">This HUD</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- WORKSPACES -->
+    <div class="section">
+      <div class="section-title cat-super">Workspaces</div>
+      <div class="bindings">
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key key-range">Num 0-9</kbd>
+          </div>
+          <span class="action">Go to WS 0-9</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key mod-shift">Shift</kbd><span class="plus">+</span><kbd class="key key-range">Num 0-9</kbd>
+          </div>
+          <span class="action">Move to WS 0-9</span>
+        </div>
+        <div class="separator"></div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-hyper">Hyper</kbd><span class="plus">+</span><kbd class="key key-range">Num 0-9</kbd>
+          </div>
+          <span class="action">Go to WS 10-19</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-hyper">Hyper</kbd><span class="plus">+</span><kbd class="key mod-shift">Shift</kbd><span class="plus">+</span><kbd class="key key-range">Num 0-9</kbd>
+          </div>
+          <span class="action">Move to WS 10-19</span>
+        </div>
+        <div class="separator"></div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-alt">Alt</kbd><span class="plus">+</span><kbd class="key key-wide">Tab</kbd>
+          </div>
+          <span class="action">Back &amp; Forth</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key key-wide">Tab</kbd>
+          </div>
+          <span class="action">Next Occupied</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-super">Super</kbd><span class="plus">+</span><kbd class="key mod-shift">Shift</kbd><span class="plus">+</span><kbd class="key key-wide">Tab</kbd>
+          </div>
+          <span class="action">Prev Occupied</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MEDIA -->
+    <div class="section">
+      <div class="section-title cat-media">Media &amp; Volume</div>
+      <div class="bindings">
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-alt">Alt</kbd><span class="plus">+</span><kbd class="key">Num *</kbd>
+          </div>
+          <span class="action">Volume Up</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-alt">Alt</kbd><span class="plus">+</span><kbd class="key">Num /</kbd>
+          </div>
+          <span class="action">Volume Down</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-alt">Alt</kbd><span class="plus">+</span><kbd class="key">Num -</kbd>
+          </div>
+          <span class="action">Mute Toggle</span>
+        </div>
+        <div class="binding">
+          <div class="keys">
+            <kbd class="key mod-alt">Alt</kbd><span class="plus">+</span><kbd class="key">Num +</kbd>
+          </div>
+          <span class="action">Play / Pause</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEGEND -->
+    <div class="section" id="legend">
+      <div class="section-title" style="color: #555; border-color: #1a1a1a;">Legend</div>
+      <div class="bindings" style="gap: 5px;">
+        <div class="binding">
+          <div class="keys"><kbd class="key mod-super" style="font-size:12px;">Super</kbd></div>
+          <span class="action" style="color:#60a5fa;">Win / Mod4</span>
+        </div>
+        <div class="binding">
+          <div class="keys"><kbd class="key mod-alt" style="font-size:12px;">Alt</kbd></div>
+          <span class="action" style="color:#34d399;">Mod1</span>
+        </div>
+        <div class="binding">
+          <div class="keys"><kbd class="key mod-hyper" style="font-size:12px;">Hyper</kbd></div>
+          <span class="action" style="color:#a78bfa;">CapsLock / Mod3</span>
+        </div>
+        <div class="binding">
+          <div class="keys"><kbd class="key mod-shift" style="font-size:12px;">Shift</kbd></div>
+          <span class="action" style="color:#fbbf24;">Modifier</span>
+        </div>
+        <div class="binding">
+          <div class="keys"><kbd class="key mod-ctrl" style="font-size:12px;">Ctrl</kbd></div>
+          <span class="action" style="color:#f472b6;">Control</span>
+        </div>
+      </div>
+    </div>
+
+</div>
+
+<footer>i3wm keybindings reference</footer>
+
+<script>
+const search = document.getElementById('search');
+const counter = document.getElementById('counter');
+const buttons = document.querySelectorAll('.mod-btn');
+let activeFilter = '';
+
+// Click en botones
+buttons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const f = btn.dataset.filter;
+    if (activeFilter === f) {
+      activeFilter = '';
+      btn.classList.remove('active');
+    } else {
+      buttons.forEach(b => b.classList.remove('active'));
+      activeFilter = f;
+      btn.classList.add('active');
+    }
+    filter();
+    search.focus();
+  });
+});
+
+// Teclas 1-5 cuando el input esta vacio para toggle rapido
+search.addEventListener('keydown', function(e) {
+  if (this.value === '' && e.key >= '1' && e.key <= '5') {
+    e.preventDefault();
+    const map = {'1':'super','2':'hyper','3':'alt','4':'ctrl','5':'shift'};
+    const f = map[e.key];
+    buttons.forEach(b => {
+      if (b.dataset.filter === f) {
+        if (activeFilter === f) {
+          activeFilter = '';
+          b.classList.remove('active');
+        } else {
+          buttons.forEach(x => x.classList.remove('active'));
+          activeFilter = f;
+          b.classList.add('active');
+        }
+      }
+    });
+    filter();
+  }
+  // Escape limpia todo
+  if (e.key === 'Escape') {
+    e.preventDefault();
+    this.value = '';
+    activeFilter = '';
+    buttons.forEach(b => b.classList.remove('active'));
+    filter();
+  }
+});
+
+search.addEventListener('input', filter);
+
+function filter() {
+  const q = search.value.toLowerCase().trim();
+  let visible = 0;
+
+  document.querySelectorAll('.binding').forEach(b => {
+    if (!b.querySelector('.keys')) return;
+    const keys = (b.querySelector('.keys')?.textContent || '').toLowerCase();
+    const action = (b.querySelector('.action')?.textContent || '').toLowerCase();
+
+    let matchText = q === '' || keys.includes(q) || action.includes(q);
+    let matchMod = activeFilter === '' || keys.includes(activeFilter);
+
+    const show = matchText && matchMod;
+    b.classList.toggle('hidden', !show);
+    if (show) visible++;
+  });
+
+  document.querySelectorAll('.section').forEach(s => {
+    const vis = s.querySelectorAll('.binding:not(.hidden)');
+    const hasFilter = q !== '' || activeFilter !== '';
+    s.classList.toggle('hidden', hasFilter && vis.length === 0);
+  });
+
+  const legend = document.getElementById('legend');
+  legend.classList.toggle('hidden', activeFilter !== '');
+
+  const hasFilter = q !== '' || activeFilter !== '';
+  if (!hasFilter) {
+    counter.textContent = '';
+    counter.className = 'counter';
+  } else if (visible > 0) {
+    counter.textContent = visible + ' encontrado' + (visible > 1 ? 's' : '');
+    counter.className = 'counter has-results';
+  } else {
+    counter.textContent = 'Sin resultados';
+    counter.className = 'counter no-results';
+  }
+}
+</script>
+
+</body>
+</html>
