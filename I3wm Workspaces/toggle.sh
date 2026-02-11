@@ -1,8 +1,8 @@
 #!/bin/bash
-# Toggle i3 Dashboard overlay with auto-refresh
+# Toggle i3 Workspaces overlay with auto-refresh
 DIR="$(cd "$(dirname "$0")" && pwd)"
-WINDOW_NAME="i3 Dashboard"
-LOOP_PID="/tmp/i3_dashboard_loop.pid"
+WINDOW_NAME="i3 Workspaces"
+LOOP_PID="/tmp/i3_workspaces_loop.pid"
 WID=$(xdotool search --name "$WINDOW_NAME" 2>/dev/null | head -1)
 
 if [ -n "$WID" ]; then
@@ -20,9 +20,9 @@ else
     echo $! > "$LOOP_PID"
 
     google-chrome \
-        --app="file://$DIR/dashboard.html" \
-        --class=i3_dashboard \
-        --user-data-dir=/tmp/i3_dashboard_chrome \
+        --app="file://$DIR/workspaces.html" \
+        --class=i3_workspaces \
+        --user-data-dir=/tmp/i3_workspaces_chrome \
         --no-first-run \
         --disable-extensions \
         --disable-default-apps &

@@ -1,7 +1,7 @@
 #!/bin/bash
-# Generate i3 Dashboard HTML — workspace overview
+# Generate i3 Workspaces HTML
 DIR="$(cd "$(dirname "$0")" && pwd)"
-OUT="$DIR/dashboard.html"
+OUT="$DIR/workspaces.html"
 TMP="$OUT.tmp"
 
 # ── Gather data ──────────────────────────────────────────
@@ -82,7 +82,7 @@ cat > "$TMP" << 'HTMLHEAD'
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>i3 Dashboard</title>
+<title>i3 Workspaces</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   ::-webkit-scrollbar { display: none; }
@@ -222,7 +222,7 @@ cat > "$TMP" << 'HTMLHEAD'
 <body>
 
 <header>
-  <h1>i3 Dashboard</h1>
+  <h1>i3 Workspaces</h1>
   <span class="hint">Press <kbd>F2</kbd> to close</span>
 </header>
 
