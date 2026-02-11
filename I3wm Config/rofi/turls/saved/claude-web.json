@@ -1,0 +1,42 @@
+{
+  "name": "Claude web",
+  "created": "2026-01-13",
+  "steps": [
+    {
+      "type": "url",
+      "value": "https://claude.ai"
+    },
+    {
+      "type": "click",
+      "x": 288,
+      "y": 510
+    },
+    {
+      "type": "wait",
+      "seconds": 6.0
+    },
+    {
+      "type": "click",
+      "x": 1030,
+      "y": 400
+    },
+    {
+      "type": "wait",
+      "seconds": 10.0
+    },
+    {
+      "type": "click",
+      "x": 1132,
+      "y": 595
+    },
+    {
+      "type": "wait",
+      "seconds": 5.0
+    },
+    {
+      "type": "click",
+      "x": 982,
+      "y": 483
+    }
+  ]
+}

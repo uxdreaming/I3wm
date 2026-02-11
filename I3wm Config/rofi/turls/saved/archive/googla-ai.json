@@ -1,0 +1,15 @@
+{
+  "name": "Googla AI",
+  "created": "2026-01-13",
+  "steps": [
+    {
+      "type": "url",
+      "value": "https://google.com"
+    },
+    {
+      "type": "click",
+      "x": 973,
+      "y": 308
+    }
+  ]
+}

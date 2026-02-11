@@ -1,0 +1,43 @@
+{
+  "name": "Claude",
+  "created": "2026-01-13",
+  "steps": [
+    {
+      "type": "url",
+      "value": "https://claude.ai"
+    },
+    {
+      "type": "click",
+      "x": 389,
+      "y": 506
+    },
+    {
+      "type": "wait",
+      "seconds": 5.0
+    },
+    {
+      "type": "click",
+      "x": 1062,
+      "y": 400
+    },
+    {
+      "type": "click",
+      "x": 1131,
+      "y": 604
+    },
+    {
+      "type": "click",
+      "x": 1038,
+      "y": 215
+    },
+    {
+      "type": "wait",
+      "seconds": 3.0
+    },
+    {
+      "type": "click",
+      "x": 466,
+      "y": 427
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+/* Configuración aislada para Thunar */
+ThunarWindow .view {
+    font-size: 18px;
+}
+
+ThunarWindow .standard-view {
+    font-size: 18px;
+}
+
+ThunarWindow .sidebar {
+    font-size: 16px;
+}

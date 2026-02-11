@@ -1,0 +1,249 @@
+# i3 config file (v4)
+# Configuración básica de i3wm
+
+# Mod key (Mod4 = Super/Windows key)
+set $mod Mod4
+
+# Hyper key (Mod3 = Caps Lock remapped)
+set $hyper Mod3
+
+# Font para títulos de ventanas
+font pango:DejaVu Sans Mono 10
+
+# Use Mouse+$mod to drag floating windows
+floating_modifier $mod
+
+# Start terminal
+bindsym $mod+Return exec alacritty
+
+# Kill focused window
+bindsym $mod+c kill
+
+# App launcher (rofi)
+bindsym $mod+d exec --no-startup-id rofi -show drun
+
+# File manager
+bindsym $mod+Shift+d exec --no-startup-id thunar
+
+# Web browser
+bindsym $mod+Shift+w exec --no-startup-id google-chrome --force-dark-mode --enable-features=WebUIDarkMode
+
+# Obsidian
+bindsym Mod1+o exec --no-startup-id ~/.config/i3/launch-obsidian.sh
+
+# Logseq
+bindsym Mod1+l exec --no-startup-id ~/.config/i3/launch-logseq.sh
+
+# ZapZap (WhatsApp)
+bindsym $mod+Shift+z exec --no-startup-id flatpak run com.rtosta.zapzap
+
+# Software Manager (tienda de apps)
+bindsym $mod+Shift+s exec --no-startup-id mintinstall
+
+# Web App Manager
+bindsym $mod+Shift+a exec --no-startup-id webapp-manager
+
+# Change focus (using arrow keys)
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Move focused window (using arrow keys)
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Split in horizontal orientation
+bindsym $mod+b split h
+
+# Split in vertical orientation
+bindsym $mod+v split v
+
+# Enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# Change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# Toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# Change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# Focus the parent container
+bindsym $mod+a focus parent
+
+# Define names for default workspaces (0-9)
+set $ws0 "0"
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+
+# Switch to workspace (numpad sin NumLock)
+bindsym $mod+KP_Insert workspace number $ws0
+bindsym $mod+KP_End workspace number $ws1
+bindsym $mod+KP_Down workspace number $ws2
+bindsym $mod+KP_Next workspace number $ws3
+bindsym $mod+KP_Left workspace number $ws4
+bindsym $mod+KP_Begin workspace number $ws5
+bindsym $mod+KP_Right workspace number $ws6
+bindsym $mod+KP_Home workspace number $ws7
+bindsym $mod+KP_Up workspace number $ws8
+bindsym $mod+KP_Prior workspace number $ws9
+
+# Move focused container to workspace (numpad sin NumLock)
+bindsym $mod+Shift+KP_Insert move container to workspace number $ws0
+bindsym $mod+Shift+KP_End move container to workspace number $ws1
+bindsym $mod+Shift+KP_Down move container to workspace number $ws2
+bindsym $mod+Shift+KP_Next move container to workspace number $ws3
+bindsym $mod+Shift+KP_Left move container to workspace number $ws4
+bindsym $mod+Shift+KP_Begin move container to workspace number $ws5
+bindsym $mod+Shift+KP_Right move container to workspace number $ws6
+bindsym $mod+Shift+KP_Home move container to workspace number $ws7
+bindsym $mod+Shift+KP_Up move container to workspace number $ws8
+bindsym $mod+Shift+KP_Prior move container to workspace number $ws9
+
+# Alt+Tab para alternar entre dos workspaces
+bindsym Mod1+Tab workspace back_and_forth
+
+# Reload the configuration file
+bindsym $mod+Shift+c reload
+
+# Restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# Exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'Exit i3?' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# Resize window mode
+mode "resize" {
+    # Pressing left/right/up/down will shrink/grow the window's width/height
+    bindsym h resize shrink width 2 px or 2 ppt
+    bindsym j resize grow height 2 px or 2 ppt
+    bindsym k resize shrink height 2 px or 2 ppt
+    bindsym l resize grow width 2 px or 2 ppt
+
+    # Arrow keys
+    bindsym Left resize shrink width 2 px or 2 ppt
+    bindsym Down resize grow height 2 px or 2 ppt
+    bindsym Up resize shrink height 2 px or 2 ppt
+    bindsym Right resize grow width 2 px or 2 ppt
+
+    # Back to normal: Enter or Escape or $mod+r
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# Status bar
+# bar {
+#     status_command i3status
+#     position top
+#
+#     colors {
+#         background #000000
+#         statusline #ffffff
+#         separator  #666666
+#
+#         focused_workspace  #4c7899 #285577 #ffffff
+#         active_workspace   #333333 #222222 #ffffff
+#         inactive_workspace #333333 #222222 #888888
+#         urgent_workspace   #2f343a #900000 #ffffff
+#         binding_mode       #2f343a #900000 #ffffff
+#     }
+# }
+
+# Theme colors basado en #202020
+set $bg-color            #202020
+set $inactive-bg-color   #1a1a1a
+set $text-color          #e0e0e0
+set $inactive-text-color #6b6b6b
+set $urgent-bg-color     #c25450
+set $indicator-color     #78a9a5
+
+# Window colors
+#                       border              background         text                 indicator           child_border
+client.focused          $indicator-color    $bg-color          $text-color          $indicator-color    $indicator-color
+client.focused_inactive $inactive-bg-color  $inactive-bg-color $inactive-text-color $inactive-bg-color  $inactive-bg-color
+client.unfocused        $inactive-bg-color  $inactive-bg-color $inactive-text-color $inactive-bg-color  $inactive-bg-color
+client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          $urgent-bg-color    $urgent-bg-color
+client.placeholder      $bg-color           $bg-color          $text-color          $bg-color           $bg-color
+
+client.background       $bg-color
+
+# Gaps (requiere i3-gaps)
+gaps inner 4
+gaps outer 2
+gaps top 3
+gaps bottom 3
+
+# Bordes de ventana (sin barras de título)
+default_border pixel 3
+default_floating_border pixel 3
+hide_edge_borders smart
+smart_borders on
+
+# Eliminar barras de título de todas las ventanas
+for_window [class=".*"] border pixel 3
+
+# Asignar aplicaciones a workspaces específicos
+assign [class="obsidian"] $ws3
+assign [class="Obsidian"] $ws3
+assign [class="Logseq"] $ws0
+assign [class="ZapZap"] $ws9
+assign [class="zapzap"] $ws9
+
+# Autostart applications
+exec --no-startup-id ~/.config/i3/setup-hyper.sh
+exec --no-startup-id ~/.config/i3/setup-dark-theme.sh
+exec --no-startup-id ~/.config/i3/monitor-daemon.sh
+exec --no-startup-id picom --config ~/.config/picom/picom.conf -b
+exec --no-startup-id dunst
+# exec --no-startup-id ~/.config/polybar/launch.sh
+exec --no-startup-id nitrogen --restore
+exec --no-startup-id nm-applet
+# exec --no-startup-id conky -c ~/.config/conky/conky.conf
+
+# Autotiling - splits automáticos
+exec_always --no-startup-id python3 ~/.config/autotiling/autotiling/main.py
+
+# Nitrogen wallpaper selector (actualiza lockscreen al cerrar)
+bindsym $mod+Shift+n exec --no-startup-id "nitrogen && ~/.config/i3/update-lockscreen.sh"
+
+# Lock screen (wallpaper de nitrogen)
+bindsym $mod+l exec i3lock -i ~/.lockscreen.png
+
+# Volume control
+bindsym XF86AudioRaiseVolume exec --no-startup-id amixer set Master 5%+
+bindsym XF86AudioLowerVolume exec --no-startup-id amixer set Master 5%-
+bindsym XF86AudioMute exec --no-startup-id amixer set Master toggle
+
+# Volume control (Alt + Numpad)
+bindsym Mod1+KP_Multiply exec --no-startup-id amixer set Master 5%+
+bindsym Mod1+KP_Divide exec --no-startup-id amixer set Master 5%-
+bindsym Mod1+KP_Subtract exec --no-startup-id amixer set Master toggle
+
+# Media control (Alt + Numpad)
+bindsym Mod1+KP_Add exec --no-startup-id playerctl play-pause
+
+# Brightness control
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10
+
+# Screenshot con flameshot
+bindsym Print exec --no-startup-id flameshot gui
+bindsym Shift+Print exec --no-startup-id flameshot gui --clipboard --path ~/downloads
+bindsym $mod+Shift+Print exec --no-startup-id flameshot gui -d 3000

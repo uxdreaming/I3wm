@@ -1,0 +1,15 @@
+{
+  "name": "Buscar im\u00e1genes",
+  "created": "2026-01-13",
+  "steps": [
+    {
+      "type": "url",
+      "value": "https://google.com"
+    },
+    {
+      "type": "click",
+      "x": 1209,
+      "y": 127
+    }
+  ]
+}

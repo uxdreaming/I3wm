@@ -9,3 +9,7 @@ else
     # HDMI no conectado - usar solo laptop
     xrandr --output HDMI-1 --off --output eDP-1 --primary --auto
 fi
+
+# Re-aplicar Hyper key (xrandr puede resetear el teclado)
+sleep 0.3
+~/.config/i3/setup-hyper.sh &
