@@ -14,6 +14,8 @@ Visual keybindings reference toggled with `F1`. All shortcuts displayed as reali
 
 System dashboard toggled with `F2`. Shows workspace indicators (Super 0-9, Hyper 10-19) and system metrics with SVG ring gauges. Auto-refreshes every 3 seconds.
 
+![Dashboard](I3wm%20Dashboard/screenshots/01-dashboard.png)
+
 **Ring gauges:** Battery, Memory, CPU, Disk — color-coded green/yellow/red by status.
 
 **Info cards:** WiFi, Temperature, Uptime, Load — with SVG icons and colored accent borders.
