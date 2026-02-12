@@ -311,9 +311,9 @@ bindsym $mod+less exec --no-startup-id /home/aru/claude/scripts/ocr_extractor.sh
 bindsym F1 exec --no-startup-id /home/aru/claude/I3wm/I3wm\ Keybindings/toggle.sh
 for_window [class="keybinds_hud"] floating enable, border none, fullscreen enable
 for_window [title="i3 Keybindings HUD"] floating enable, border none, fullscreen enable
-bindsym F2 exec --no-startup-id /home/aru/claude/I3wm/I3wm\ Dashboard/toggle.sh
-for_window [class="i3_dashboard"] floating enable, border none, fullscreen enable
-for_window [title="i3 Dashboard"] floating enable, border none, fullscreen enable
+bindsym F2 exec --no-startup-id /home/aru/claude/I3wm/I3wm\ Workspaces/toggle.sh
+for_window [class="i3_workspaces"] floating enable, border none, fullscreen enable
+for_window [title="i3 Workspaces"] floating enable, border none, fullscreen enable
 exec --no-startup-id xsettingsd
 
 # Launch Date Widget (Conky)
