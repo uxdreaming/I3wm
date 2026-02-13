@@ -94,10 +94,8 @@ build_ws() {
   echo "$html"
 }
 
-WS_SUPER_A=$(build_ws 0 4 "blue" 0)
-WS_SUPER_B=$(build_ws 5 9 "blue" 0)
-WS_HYPER_A=$(build_ws 10 14 "purple" 10)
-WS_HYPER_B=$(build_ws 15 19 "purple" 10)
+WS_SUPER=$(build_ws 0 9 "blue" 0)
+WS_HYPER=$(build_ws 10 19 "purple" 10)
 
 
 # ── Generate HTML ────────────────────────────────────────
@@ -166,16 +164,16 @@ cat > "$TMP" << 'HTMLHEAD'
   .ws-label.purple { color: #a78bfa; }
 
   .ws-row {
-    display: flex; justify-content: center; gap: 10px;
+    display: flex; justify-content: center; gap: 8px;
   }
 
   .ws {
-    width: 140px; height: 115px;
+    width: 100px; height: 80px;
     display: flex; flex-direction: column;
     align-items: center;
-    padding: 10px 0 8px;
+    padding: 8px 0 6px;
     gap: 2px;
-    border-radius: 10px;
+    border-radius: 8px;
     font-family: 'SF Mono', 'Fira Code', monospace;
     background: #1a1a1a; border: 1px solid #2a2a2a;
     color: #3a3a3a;
@@ -184,20 +182,20 @@ cat > "$TMP" << 'HTMLHEAD'
   }
 
   .ws-num {
-    font-size: 20px; font-weight: 600;
+    font-size: 16px; font-weight: 600;
     line-height: 1;
   }
 
   .ws-icons {
     display: flex; flex-wrap: wrap;
     justify-content: center;
-    gap: 4px;
-    margin-top: 6px;
-    max-width: 64px;
+    gap: 3px;
+    margin-top: 4px;
+    max-width: 80px;
   }
 
   .ws-icons img {
-    width: 24px; height: 24px;
+    width: 20px; height: 20px;
     opacity: 0.85;
   }
 
@@ -215,7 +213,7 @@ cat > "$TMP" << 'HTMLHEAD'
 
   .ws-focused {
     box-shadow: 0 0 0 2px #60a5fa, 0 0 16px rgba(96,165,250,0.3);
-    transform: scale(1.1);
+    transform: scale(1.08);
   }
   .ws-focused[data-color="purple"] {
     box-shadow: 0 0 0 2px #a78bfa, 0 0 16px rgba(167,139,250,0.3);
@@ -255,14 +253,12 @@ HTMLHEAD
 cat >> "$TMP" << WSSECTION
   <div class="ws-section">
     <div class="ws-label blue">Super Workspaces</div>
-    <div class="ws-row">$WS_SUPER_A</div>
-    <div class="ws-row">$WS_SUPER_B</div>
+    <div class="ws-row">$WS_SUPER</div>
   </div>
 
   <div class="ws-section">
     <div class="ws-label purple">Hyper Workspaces</div>
-    <div class="ws-row">$WS_HYPER_A</div>
-    <div class="ws-row">$WS_HYPER_B</div>
+    <div class="ws-row">$WS_HYPER</div>
   </div>
 WSSECTION
 
