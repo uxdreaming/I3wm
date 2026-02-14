@@ -7,6 +7,9 @@ set $mod Mod4
 # Hyper key (Mod3 = Caps Lock remapped)
 set $hyper Mod3
 
+# Right Ctrl key (Mod5 = Right Ctrl remapped)
+set $rctrl Mod5
+
 
 # Audio device selector
 bindsym $hyper+p exec --no-startup-id ~/.config/rofi/scripts/audio-selector.sh
@@ -265,6 +268,7 @@ assign [class="zapzap"] $ws9
 
 # Autostart applications
 exec_always --no-startup-id ~/.config/i3/setup-hyper.sh
+exec_always --no-startup-id ~/.config/i3/setup-rctrl.sh
 exec --no-startup-id ~/.config/i3/setup-dark-theme.sh
 exec --no-startup-id ~/.config/i3/monitor-daemon.sh
 exec --no-startup-id picom --config ~/.config/picom/picom.conf -b
