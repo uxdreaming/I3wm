@@ -20,6 +20,10 @@ Workspace overview toggled with `F2`. Shows all 20 workspaces (Super 0-9, Hyper 
 
 Converts Caps Lock to a **real Hyper key** on `mod3`, completely separate from Super (`mod4`). Includes install/uninstall scripts, autostart desktop entry, and udev rule for USB keyboards. Solves the common problem where most guides incorrectly put Hyper on mod4 making it identical to Super.
 
+### [I3wm Rctrl Key](I3wm%20Rctrl%20Key/)
+
+Turns Right Ctrl into an **independent modifier** (`Mod5`), separate from Super, Hyper, and Alt. Frees up a fifth modifier for additional keybindings without losing AltGr's special character production (`@`, `#`, `{`, `}`).
+
 ### [I3wm Config](I3wm%20Config/)
 
 All dotfiles organized by application:

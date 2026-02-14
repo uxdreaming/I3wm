@@ -84,6 +84,7 @@
   .section-title.cat-system { color: #f87171; border-color: #4a2020; }
   .section-title.cat-screenshot { color: #fb923c; border-color: #4a3020; }
   .section-title.cat-resize { color: #38bdf8; border-color: #1a3a4f; }
+  .section-title.cat-rctrl { color: #2dd4bf; border-color: #1a4a4a; }
 
   .bindings {
     display: flex;
@@ -168,6 +169,13 @@
     border-color: #c050a0;
     border-bottom-color: #5a1a42;
     color: #f0b8d8;
+  }
+
+  kbd.mod-rctrl {
+    background: linear-gradient(180deg, #1a6b6b 0%, #145050 100%);
+    border-color: #2a8a8a;
+    border-bottom-color: #0e3a3a;
+    color: #8ee8e8;
   }
 
   kbd.key-fn {
@@ -282,6 +290,7 @@
   .mod-btn-alt.active { background: #14503a; border-color: #2a8a62; color: #8ee8c0; }
   .mod-btn-ctrl.active { background: #7a2a58; border-color: #c050a0; color: #f0b8d8; }
   .mod-btn-shift.active { background: #7a5010; border-color: #b88030; color: #f0d898; }
+  .mod-btn-rctrl.active { background: #145050; border-color: #2a8a8a; color: #8ee8e8; }
 
   .counter {
     font-size: 13px;
@@ -334,6 +343,7 @@
       <button class="mod-btn mod-btn-alt" data-filter="alt">3 Alt</button>
       <button class="mod-btn mod-btn-ctrl" data-filter="ctrl">4 Ctrl</button>
       <button class="mod-btn mod-btn-shift" data-filter="shift">5 Shift</button>
+      <button class="mod-btn mod-btn-rctrl" data-filter="rctrl">6 RCtrl</button>
     </div>
     <span id="counter" class="counter"></span>
   </div>
@@ -437,6 +447,16 @@
             <kbd class="key mod-hyper">Hyper</kbd><span class="plus">+</span><kbd class="key">W</kbd>
           </div>
           <span class="action">WiFi Menu</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT CTRL -->
+    <div class="section">
+      <div class="section-title cat-rctrl">Right Ctrl</div>
+      <div class="bindings">
+        <div class="binding" style="padding: 6px; color: #555; font-size: 13px; font-style: italic;">
+          No bindings yet — use $rctrl+key in config
         </div>
       </div>
     </div>
@@ -755,6 +775,10 @@
           <div class="keys"><kbd class="key mod-ctrl" style="font-size:12px;">Ctrl</kbd></div>
           <span class="action" style="color:#f472b6;">Control</span>
         </div>
+        <div class="binding">
+          <div class="keys"><kbd class="key mod-rctrl" style="font-size:12px;">RCtrl</kbd></div>
+          <span class="action" style="color:#2dd4bf;">Right Ctrl / Mod5</span>
+        </div>
       </div>
     </div>
 
@@ -787,9 +811,9 @@ buttons.forEach(btn => {
 
 // Teclas 1-5 cuando el input esta vacio para toggle rapido
 search.addEventListener('keydown', function(e) {
-  if (this.value === '' && e.key >= '1' && e.key <= '5') {
+  if (this.value === '' && e.key >= '1' && e.key <= '6') {
     e.preventDefault();
-    const map = {'1':'super','2':'hyper','3':'alt','4':'ctrl','5':'shift'};
+    const map = {'1':'super','2':'hyper','3':'alt','4':'ctrl','5':'shift','6':'rctrl'};
     const f = map[e.key];
     buttons.forEach(b => {
       if (b.dataset.filter === f) {
