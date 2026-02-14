@@ -312,6 +312,9 @@ bindsym $mod+Shift+Print exec --no-startup-id flameshot gui -d 3000
 
 # OCR Text Extractor
 bindsym $mod+less exec --no-startup-id /home/aru/claude/scripts/ocr_extractor.sh
+
+# Audio recorder + transcriber
+bindsym $hyper+r exec --no-startup-id /home/aru/claude/scripts/audio-transcribe.sh
 bindsym F1 exec --no-startup-id /home/aru/claude/I3wm/I3wm\ Keybindings/toggle.sh
 for_window [class="keybinds_hud"] floating enable, border none, fullscreen enable
 for_window [title="i3 Keybindings HUD"] floating enable, border none, fullscreen enable
