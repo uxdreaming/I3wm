@@ -20,6 +20,9 @@ bindsym $hyper+v exec --no-startup-id pavucontrol
 # Notification center
 bindsym $hyper+n exec --no-startup-id rofi-notif-center
 
+# Ghostty terminal
+bindsym $hyper+g exec --no-startup-id ~/.local/bin/ghostty
+
 
 # Font para títulos de ventanas
 font pango:DejaVu Sans Mono 10
