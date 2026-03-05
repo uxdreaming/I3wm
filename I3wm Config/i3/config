@@ -276,6 +276,10 @@ exec --no-startup-id ~/.config/i3/setup-dark-theme.sh
 exec --no-startup-id ~/.config/i3/monitor-daemon.sh
 exec --no-startup-id picom --config ~/.config/picom/picom.conf -b
 exec --no-startup-id dunst
+
+# Hyper+Q: Toggle Do Not Disturb (pause/unpause notifications)
+bindsym $hyper+q exec --no-startup-id ~/.config/i3/toggle-dnd.sh
+for_window [title="^$" class="Zenity"] floating enable, border none, move position center
 # exec --no-startup-id ~/.config/polybar/launch.sh
 exec --no-startup-id nitrogen --restore
 exec --no-startup-id nm-applet
