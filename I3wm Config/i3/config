@@ -327,7 +327,7 @@ for_window [class="keybinds_hud"] floating enable, border none, fullscreen enabl
 for_window [title="i3 Keybindings HUD"] floating enable, border none, fullscreen enable
 
 # Pencil (prototyping)
-bindsym $hyper+x exec --no-startup-id /home/aru/downloads/Pencil-linux-x86_64.AppImage
+bindsym $hyper+x exec --no-startup-id /home/aru/.local/bin/pencil
 
 # CoolPickr
 for_window [title="CoolPickr Picker"] floating enable, border none
