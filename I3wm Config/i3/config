@@ -326,6 +326,9 @@ bindsym F1 exec --no-startup-id /home/aru/claude/I3wm/I3wm\ Keybindings/toggle.s
 for_window [class="keybinds_hud"] floating enable, border none, fullscreen enable
 for_window [title="i3 Keybindings HUD"] floating enable, border none, fullscreen enable
 
+# Dict — voice dictation
+bindsym $hyper+d exec --no-startup-id bash "/home/aru/claude/projects/Linux/ Dict/run.sh"
+
 # Pencil (prototyping)
 bindsym $hyper+x exec --no-startup-id /home/aru/.local/bin/pencil
 
