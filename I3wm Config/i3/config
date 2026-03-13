@@ -332,6 +332,9 @@ bindsym $hyper+d exec --no-startup-id bash "/home/aru/claude/projects/Linux/ Dic
 # Pencil (prototyping)
 bindsym $hyper+x exec --no-startup-id /home/aru/.local/bin/pencil
 
+# Paper (design)
+bindsym $hyper+z exec --no-startup-id /home/aru/downloads/paper-desktop-0.1.9x86_64.AppImage
+
 # CoolPickr
 for_window [title="CoolPickr Picker"] floating enable, border none
 exec --no-startup-id xsettingsd
