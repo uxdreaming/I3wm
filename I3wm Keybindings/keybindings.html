@@ -876,7 +876,6 @@ search.addEventListener('input', filter);
 
 function filter() {
   const q = search.value.toLowerCase().trim();
-  let visible = 0;
 
   document.querySelectorAll('.binding').forEach(b => {
     if (!b.querySelector('.keys')) return;
@@ -888,7 +887,6 @@ function filter() {
 
     const show = matchText && matchMod;
     b.classList.toggle('hidden', !show);
-    if (show) visible++;
   });
 
   document.querySelectorAll('.section').forEach(s => {
@@ -899,6 +897,8 @@ function filter() {
 
   const legend = document.getElementById('legend');
   legend.classList.toggle('hidden', activeFilter !== '');
+
+  const visible = document.querySelectorAll('.section:not(.hidden) .binding:not(.hidden)').length;
 
   const hasFilter = q !== '' || activeFilter !== '';
   if (!hasFilter) {
