@@ -10,12 +10,6 @@ Visual keybindings reference toggled with `F1`. All shortcuts displayed as reali
 
 ![Keybindings HUD](I3wm%20Keybindings/screenshots/01-general.png)
 
-### [I3wm Workspaces](I3wm%20Workspaces/)
-
-Workspace overview toggled with `F2`. Shows all 20 workspaces (Super 0-9, Hyper 10-19) with occupancy status, window count, and focused workspace glow. Auto-refreshes every 3 seconds.
-
-![Workspaces](I3wm%20Workspaces/screenshots/01-workspaces.png)
-
 ### [I3wm Hyper Key](I3wm%20Hyper%20Key/)
 
 Converts Caps Lock to a **real Hyper key** on `mod3`, completely separate from Super (`mod4`). Includes install/uninstall scripts, autostart desktop entry, and udev rule for USB keyboards. Solves the common problem where most guides incorrectly put Hyper on mod4 making it identical to Super.
@@ -46,27 +40,25 @@ Complete setup guide from scratch: base installation, essential programs (rofi, 
 ```bash
 git clone https://github.com/uxdreaming/I3wm.git ~/I3wm
 chmod +x ~/I3wm/I3wm\ Keybindings/toggle.sh
-chmod +x ~/I3wm/I3wm\ Workspaces/{toggle,generate}.sh
 ```
 
 Add to `~/.config/i3/config`:
 
 ```bash
 bindsym F1 exec --no-startup-id ~/I3wm/I3wm\ Keybindings/toggle.sh
-bindsym F2 exec --no-startup-id ~/I3wm/I3wm\ Workspaces/toggle.sh
 ```
 
 See the [I3wm Guide](I3wm%20Guide/) for full installation steps.
 
 ## Architecture
 
-Both HUD overlays use the same pattern:
+The HUD overlay uses this pattern:
 
 1. Shell script checks if window exists (via `xdotool`)
 2. If open → close it
-3. If closed → generate HTML → launch Chrome `--app` mode → force fullscreen via `i3-msg`
+3. If closed → launch Chrome `--app` mode → force fullscreen via `i3-msg`
 
-Each overlay runs in an isolated Chrome profile (`/tmp/`) so it doesn't interfere with regular browsing.
+The overlay runs in an isolated Chrome profile (`/tmp/`) so it doesn't interfere with regular browsing.
 
 ## License
 
