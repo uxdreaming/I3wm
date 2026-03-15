@@ -417,3 +417,7 @@ pip3 install autotiling i3-swallow
 ---
 
 *Guide created to replicate my personal i3wm configuration*
+
+---
+
+*Maintained by [uxdreaming](https://github.com/uxdreaming)*

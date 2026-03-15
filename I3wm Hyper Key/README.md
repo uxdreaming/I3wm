@@ -162,3 +162,7 @@ sudo ./uninstall.sh
 - Linux Mint 22 (Cinnamon)
 - Ubuntu 24.04 (GNOME)
 - Xfce / i3wm
+
+---
+
+*Maintained by [uxdreaming](https://github.com/uxdreaming)*

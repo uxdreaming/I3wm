@@ -196,3 +196,7 @@ xmodmap -e "add mod5 = Hyper_R"
 ## License
 
 MIT
+
+---
+
+*Maintained by [uxdreaming](https://github.com/uxdreaming)*
