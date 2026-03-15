@@ -63,3 +63,7 @@ The overlay runs in an isolated Chrome profile (`/tmp/`) so it doesn't interfere
 ## License
 
 MIT
+
+---
+
+*Maintained by [uxdreaming](https://github.com/uxdreaming)*
